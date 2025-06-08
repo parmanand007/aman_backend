@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import { app, server } from "./lib/socket.js";
 
+
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
@@ -29,14 +30,19 @@ app.use(
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  const distPath = path.join(__dirname, "../frontend/dist");
-  app.use(express.static(distPath));
+// if (process.env.NODE_ENV === "production") {
+//   const distPath = path.join(__dirname, "../frontend/dist");
 
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(distPath, "index.html"));
-  });
-}
+//   if (fs.existsSync(distPath)) {
+//     app.use(express.static(distPath));
+
+//     app.get("/*", (req, res) => {
+//       res.sendFile(path.join(distPath, "index.html"));
+//     });
+//   } else {
+//     console.warn("⚠️ Warning: 'frontend/dist' folder not found. Skipping static file serving.");
+//   }
+// }
 
 server.listen(PORT, () => {
   console.log("server is running on PORT:" + PORT);
